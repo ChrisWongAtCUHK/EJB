@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="EJBHelloWorld">
+	<!-- Declare the properties -->
+	<property name="project-name"  value="EJBHelloWorld"/>
+	<property environment="env"/>
+	<property name="cp" value=".;${env.OPENEJB_HOME}/lib/javaee-api-5.0-2.jar"/>
+	<property name="base-dir"  value="bin"/>
+	<property name="main-class"  value="org.acme.HelloClient"/>
+	
+	<!-- Compile the java source code -->
+	<target name="compile">
+		<javac includeantruntime="false" srcdir="./src" destdir="${base-dir}" classpath="${cp}" >
+		</javac>
+	</target>
+	
+	<!-- Start EJB server(Windows) -->
+	<target name="startejb">
+		<exec executable="startejb.bat">
+		</exec>
+	</target>
+	
+	<!-- Build the jar -->
+	<target name="build">
+		<mkdir dir="deploy" />
+		<jar jarfile="deploy/${project-name}.jar" basedir="${base-dir}">
+		</jar>
+	</target>
+	
+	<!-- Deploy the jar -->
+	<target name="deploy">
+		<exec executable="deploy.bat">
+		</exec>
+	</target>
+	
+	<!-- Run client-->
+	<target name="run">
+		<java classname="${main-class}" fork="true" classpath=".;${base-dir};${env.OPENEJB_HOME}/lib/openejb-client-3.1.1.jar;${cp}">
+		</java>
+	</target>
+</project>
