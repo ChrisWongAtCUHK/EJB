@@ -20,7 +20,7 @@
 	</target>
 	
 	<!-- Build the jar -->
-	<target name="build">
+	<target name="build" depends="compile">
 		<mkdir dir="deploy" />
 		<jar jarfile="deploy/${project-name}.jar" basedir="${base-dir}">
 		</jar>
